@@ -45,8 +45,20 @@ class MainActivity : ComponentActivity() {
                     //MyComplexScreen()
                     //MyExpensesLayout()
                     //MyProfileLayout()
-                    MyUserCheck()
+                    //MyUserCheck()
                     //MainContent()
+
+                    //lista de objetos CheckInfo
+                    val myOptions = getOptions(titles = listOf("Aris", "Pepe", "Brais"))
+
+                    Column {
+                        MyTriStatusCheckBox() //checkBox indeterminado
+
+                        // creando un checkBox por cada elemento de la lista de objetos
+                        myOptions.forEach {
+                            MyCheckBoxCompleted(checkInfo = it)
+                        }
+                    }
                 }
             }
         }
