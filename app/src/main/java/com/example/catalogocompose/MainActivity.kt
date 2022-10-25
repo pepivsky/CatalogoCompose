@@ -51,6 +51,11 @@ class MainActivity : ComponentActivity() {
                     //lista de objetos CheckInfo
                     val myOptions = getOptions(titles = listOf("Aris", "Pepe", "Brais"))
 
+                    // seleccion
+                    var selected by rememberSaveable {
+                        mutableStateOf("Aris")
+                    }
+
                     Column {
                         MyTriStatusCheckBox() //checkBox indeterminado
 
@@ -58,6 +63,11 @@ class MainActivity : ComponentActivity() {
                         myOptions.forEach {
                             MyCheckBoxCompleted(checkInfo = it)
                         }
+                        
+                        MyRadioButtonListStateHoisting(
+                            name = selected,
+                            onItemSelected = { selected = it }
+                        )
                     }
                 }
             }
