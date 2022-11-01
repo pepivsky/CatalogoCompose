@@ -1,10 +1,7 @@
 package com.example.catalogocompose
 
 import android.widget.Toast
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.material.Button
@@ -53,7 +50,7 @@ fun MyRecycler() {
     }
 
 }
-
+// recyclerView normal
 @Preview(showBackground = true)
 @Composable
 fun SuperHeroView() {
@@ -62,6 +59,33 @@ fun SuperHeroView() {
         items(getSuperHeroes()) { hero ->
             ItemHero(hero) { Toast.makeText(context, it.realName, Toast.LENGTH_SHORT).show() }
         }
+    }
+}
+
+// recyclerView ncon cabecera
+@OptIn(ExperimentalFoundationApi::class)
+@Preview(showBackground = true)
+@Composable
+fun SuperHeroStickyView() {
+    val context = LocalContext.current
+    // agrupar por publisher
+    val superHero = getSuperHeroes().groupBy { it.publisher }
+
+    LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        superHero.forEach { (publisher, mySuperHero) ->
+
+            // cabecera agrupada por publisher, la cabecera es un texto
+            stickyHeader {
+                Text(modifier = Modifier.background(Color.Cyan).fillMaxWidth(),text = publisher)
+            }
+
+            // pasarle los items
+            items(mySuperHero) { hero ->
+                ItemHero(hero) { Toast.makeText(context, it.realName, Toast.LENGTH_SHORT).show() }
+            }
+        }
+
+
     }
 }
 
@@ -79,6 +103,7 @@ fun SuperHeroGridView() {
 
 }
 
+// recyclerView control especial
 @Preview(showBackground = true)
 @Composable
 fun SuperHeroViewWithSpecialControl() {
@@ -115,6 +140,7 @@ fun SuperHeroViewWithSpecialControl() {
     }
 }
 
+// item para dibujar cada superhero y controlar el tap en el item
 @Composable
 fun ItemHero(superHero: SuperHero, onItemSelected: (SuperHero) -> Unit) {
     Card(modifier = Modifier
