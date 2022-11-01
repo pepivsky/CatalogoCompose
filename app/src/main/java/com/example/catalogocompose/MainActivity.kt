@@ -12,7 +12,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,6 +26,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 
 
 class MainActivity : ComponentActivity() {
@@ -49,7 +51,7 @@ class MainActivity : ComponentActivity() {
                     //MainContent()
 
                     //lista de objetos CheckInfo
-                    val myOptions = getOptions(titles = listOf("Aris", "Pepe", "Brais"))
+                    /*val myOptions = getOptions(titles = listOf("Aris", "Pepe", "Brais"))
 
                     // seleccion
                     var selected by rememberSaveable {
@@ -68,6 +70,13 @@ class MainActivity : ComponentActivity() {
                             name = selected,
                             onItemSelected = { selected = it }
                         )
+                    }*/
+                    
+                    val navigationController = rememberNavController()
+                    NavHost(navController = navigationController, startDestination = "pantalla1") {
+                        composable("pantalla1") { Screen1(navigationController) }
+                        composable("pantalla2") { Screen2(navigationController) }
+                        composable("pantalla3") { Screen3(navigationController) }
                     }
                 }
             }
