@@ -10,6 +10,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
+import com.example.catalogocompose.model.Routes
+
 /*
 Ejemplo de navegacion entre pantallas, el navigationController se declara en el mainActivity
  */
@@ -26,7 +28,7 @@ fun Screen1(navigationController: NavHostController) {
             text = "Pantalla 1",
             modifier = Modifier
                 .align(Alignment.Center)
-                .clickable { navigationController.navigate("pantalla2") })
+                .clickable { navigationController.navigate(Routes.Pantalla2.route) })
     }
 }
 
@@ -42,7 +44,7 @@ fun Screen2(navigationController: NavHostController) {
             text = "Pantalla 2",
             modifier = Modifier
                 .align(Alignment.Center)
-                .clickable { navigationController.navigate("pantalla3") })
+                .clickable { navigationController.navigate(Routes.Pantalla3.route) })
     }
 }
 

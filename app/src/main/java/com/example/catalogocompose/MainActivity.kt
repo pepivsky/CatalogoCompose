@@ -29,6 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.catalogocompose.model.Routes
 
 
 class MainActivity : ComponentActivity() {
@@ -71,12 +72,15 @@ class MainActivity : ComponentActivity() {
                             onItemSelected = { selected = it }
                         )
                     }*/
-                    
+
                     val navigationController = rememberNavController()
-                    NavHost(navController = navigationController, startDestination = "pantalla1") {
-                        composable("pantalla1") { Screen1(navigationController) }
-                        composable("pantalla2") { Screen2(navigationController) }
-                        composable("pantalla3") { Screen3(navigationController) }
+                    NavHost(
+                        navController = navigationController,
+                        startDestination = Routes.Pantalla1.route
+                    ) {
+                        composable(Routes.Pantalla1.route) { Screen1(navigationController) }
+                        composable(Routes.Pantalla2.route) { Screen2(navigationController) }
+                        composable(Routes.Pantalla3.route) { Screen3(navigationController) }
                     }
                 }
             }
