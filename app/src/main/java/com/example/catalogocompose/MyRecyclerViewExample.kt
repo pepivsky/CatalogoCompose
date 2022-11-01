@@ -7,9 +7,10 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
+import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -19,6 +20,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.catalogocompose.model.SuperHero
+import kotlinx.coroutines.launch
+
 
 // Ejemplo simple de recyclerView
 @Preview(showBackground = true)
@@ -62,6 +65,7 @@ fun SuperHeroView() {
     }
 }
 
+// recyclerview Grid
 @OptIn(ExperimentalFoundationApi::class)
 @Preview(showBackground = true)
 @Composable
@@ -75,10 +79,46 @@ fun SuperHeroGridView() {
 
 }
 
+@Preview(showBackground = true)
+@Composable
+fun SuperHeroViewWithSpecialControl() {
+    val context = LocalContext.current
+    val rvState = rememberLazyListState() // estado del recycler
+    val coroutineScope = rememberCoroutineScope() // scope para usar corutinas
+
+    Column {
+        LazyColumn(modifier = Modifier.weight(1F),state = rvState, verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            items(getSuperHeroes()) { hero ->
+                ItemHero(hero) { Toast.makeText(context, it.realName, Toast.LENGTH_SHORT).show() }
+            }
+        }
+
+        // estado intermedio optimizado para no redibujar la ui cada vez que se le hace scroll al rv
+        val showButton by remember {
+            derivedStateOf {
+                rvState.firstVisibleItemIndex > 0
+            }
+        }
+
+        // si el item que vemos la hacer scroll es > 0 entonces se muestra el boton
+        if (showButton) {
+            Button(modifier = Modifier.align(Alignment.CenterHorizontally),onClick = {
+                // nos lleva al item indicado, debe ser ejecutado en una corutina
+                coroutineScope.launch {
+                    rvState.animateScrollToItem(0)
+                }
+            }) {
+                Text(text = "Soy un boton cool")
+            }
+        }
+
+    }
+}
+
 @Composable
 fun ItemHero(superHero: SuperHero, onItemSelected: (SuperHero) -> Unit) {
     Card(modifier = Modifier
-        .width(200.dp)
+        .fillMaxWidth()
         .clickable { onItemSelected(superHero) }, border = BorderStroke(2.dp, Color.Red)) {
         Column(){
             Image(
