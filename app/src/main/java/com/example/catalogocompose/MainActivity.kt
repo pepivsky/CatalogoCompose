@@ -26,9 +26,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.catalogocompose.model.Routes
 
 
@@ -79,8 +81,24 @@ class MainActivity : ComponentActivity() {
                         startDestination = Routes.Pantalla1.route
                     ) {
                         composable(Routes.Pantalla1.route) { Screen1(navigationController) }
-                        composable(Routes.Pantalla2.route) { Screen2(navigationController) }
+
+                        composable(
+                            Routes.Pantalla2.route,
+                            arguments = listOf(navArgument(Routes.Pantalla2.KEY_AGE) { type = NavType.IntType })
+
+                        ) {
+                            val argument = it.arguments?.getInt(Routes.Pantalla2.KEY_AGE) ?: 0
+                            Screen2(navigationController, argument)
+                        }
+
                         composable(Routes.Pantalla3.route) { Screen3(navigationController) }
+
+                        // navegacion con argumento String
+                        composable(Routes.Pantalla4.route) {
+                            val argument = it.arguments?.getString(Routes.Pantalla4.KEY_NAME)
+                            Screen4(navigationController, argument.orEmpty())
+                        }
+
                     }
                 }
             }
@@ -152,7 +170,7 @@ fun MyComplexScreen() {
         Spacer(modifier = Modifier
             .fillMaxWidth()
             .height(20.dp))
-        
+
         Row(
             Modifier
                 .fillMaxWidth()
