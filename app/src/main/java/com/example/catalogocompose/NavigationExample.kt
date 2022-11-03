@@ -32,7 +32,7 @@ fun Screen1(navigationController: NavHostController) {
     }
 }
 
-// Pantalla 2
+// Pantalla 2 recibe un Int
 @Composable
 fun Screen2(navigationController: NavHostController, age: Int) {
     Box(
@@ -64,7 +64,7 @@ fun Screen3(navigationController: NavHostController) {
     }
 }
 
-// Pantalla 4
+// Pantalla 4 recibe un String
 @Composable
 fun Screen4(navigationController: NavHostController, name: String) {
     Box(
@@ -72,7 +72,24 @@ fun Screen4(navigationController: NavHostController, name: String) {
             .fillMaxSize()
             .background(Color.Yellow)
     ) {
-        Text(text = "Pantalla 4 $name", modifier = Modifier.align(Alignment.Center))
+        Text(
+            text = "Pantalla 4 $name",
+            modifier = Modifier
+                .align(Alignment.Center)
+                .clickable { navigationController.navigate("pantalla5") })
+    }
+}
+
+
+// Pantalla 5 recibe un String (argumento opcional)
+@Composable
+fun Screen5(navigationController: NavHostController, country: String?) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.LightGray)
+    ) {
+        Text(text = "Pantalla 5 $country", modifier = Modifier.align(Alignment.Center))
     }
 }
 

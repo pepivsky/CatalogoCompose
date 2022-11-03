@@ -15,4 +15,10 @@ sealed class Routes(val route: String) {
         fun createRoute(name: String) = "pantalla4/$name"
     }
 
+    // argumento opcional
+    object Pantalla5 : Routes("pantalla5?country={country}") {
+        const val KEY_COUNTRY = "country"
+        fun createRoute(country: String) = "pantalla5?country=$country"
+    }
+
 }

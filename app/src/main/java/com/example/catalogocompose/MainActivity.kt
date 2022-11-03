@@ -99,6 +99,13 @@ class MainActivity : ComponentActivity() {
                             Screen4(navigationController, argument.orEmpty())
                         }
 
+                        composable(Routes.Pantalla5.route,
+                            arguments = listOf(navArgument(Routes.Pantalla5.KEY_COUNTRY, {defaultValue = "defaultCountry"}))
+                            )
+                        {
+                            Screen5(navigationController = navigationController, it.arguments?.getString(Routes.Pantalla5.KEY_COUNTRY))
+                        }
+
                     }
                 }
             }
